@@ -4,12 +4,12 @@ import {Dispatch} from "redux";
 
 type InitialStateType = {
   planets: PlanetType[]
-  loading: boolean
+  init: boolean
   error: string | null
 }
 const initialState: InitialStateType = {
   planets: [],
-  loading: false,
+  init: false,
   error: '',
 }
 
@@ -17,8 +17,8 @@ export const planetsReducer = (state: InitialStateType = initialState, action: A
   switch (action.type) {
     case "PLANETS/SET-PLANETS":
       return {...state, planets: action.planets}
-    case "PLANETS/SET-LOADING":
-      return {...state, loading: action.loading}
+    case "PLANETS/SET-INIT":
+      return {...state, init: action.init}
     case "PLANETS/SET-ERROR":
       return {...state, error: action.error}
     default:
@@ -28,10 +28,10 @@ export const planetsReducer = (state: InitialStateType = initialState, action: A
 
 export const setPlanetsAC = (planets: PlanetType[]) => ({type: 'PLANETS/SET-PLANETS', planets} as const)
 export const setErrorAC = (error: string | null) => ({type: 'PLANETS/SET-ERROR', error} as const)
-export const setLoadingAC = (loading: boolean) => ({type: 'PLANETS/SET-LOADING', loading} as const)
+export const setInitAC = (init: boolean) => ({type: 'PLANETS/SET-INIT', init} as const)
 
 export type SetPlanetsACType = ReturnType<typeof setPlanetsAC>
-export type SetLoadingACType = ReturnType<typeof setLoadingAC>
+export type SetLoadingACType = ReturnType<typeof setInitAC>
 export type SetAppErrorACType = ReturnType<typeof setErrorAC>
 
 type ActionsType = SetAppErrorACType
@@ -41,11 +41,11 @@ type ActionsType = SetAppErrorACType
 // thunks
 export const fetchPlanetsTC = () => {
   return (dispatch: Dispatch) => {
-    dispatch(setLoadingAC(true))
+    //dispatch(setInitAC(true))
     swapiApi.getPlanets()
       .then((res) => {
         dispatch(setPlanetsAC(res.data.results))
-        dispatch(setLoadingAC(false))
+        dispatch(setInitAC(true))
       })
   }
 }

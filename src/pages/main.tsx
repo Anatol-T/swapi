@@ -1,23 +1,32 @@
 import React from 'react';
 import {useAppSelector} from "../store/store";
 import {PlanetType} from "../api/api";
-import {Planet} from "../conponents/Planet";
+import {PlanetCard} from "../conponents/PlanetCard";
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 
 export const Main = () => {
 
 
   const planets = useAppSelector<PlanetType[]>(state => state.planets.planets)
-  const loading = useAppSelector<boolean>(state => state.planets.loading)
+  const init = useAppSelector<boolean>(state => state.planets.init)
 
 
   return (
-    <div>
-      {loading && <div>loading...</div>}
-      {!loading && planets.map(planet => {
-        return (
-          <Planet planet={planet} key={planet.name}/>
-        )
-      })}
-    </div>
+      <Container fixed>
+        <Grid container justifyContent="center">
+          <Grid item>
+            <h2>Planets list</h2>
+          </Grid>
+        </Grid>
+        <Grid container spacing={3}>
+          {!init && <div>loading...</div>}
+          {init && planets.map(planet => {
+            return (
+              <PlanetCard planet={planet} key={planet.name}/>
+            )
+          })}
+        </Grid>
+      </Container>
   );
 };

@@ -1,17 +1,22 @@
 import React, {useEffect} from 'react';
 import './App.css';
-import {Navigate, Route, Routes} from "react-router-dom";
+import { Navigate, Route, Routes} from "react-router-dom";
 import {Main} from "./pages/main";
 import {Info} from "./pages/Info";
 import {fetchPlanetsTC} from "./store/planetsReducer";
 import {useDispatch} from "react-redux";
+import {useAppSelector} from "./store/store";
+import spinner from "../src/assets/DoubleRingSpinner.svg"
 
 function App() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<any>()
+  const init = useAppSelector<boolean>(state => state.planets.init)
+
   useEffect(()=>{
-    // @ts-ignore
     dispatch(fetchPlanetsTC())
   }, [dispatch])
+
+  if (!init) return <div className={'loading'}><img src={spinner} alt="loading..."/></div>
   return (
     <div className="App">
       <Routes>
