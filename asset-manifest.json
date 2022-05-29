@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/swapi/static/css/main.7d4f9bb0.css",
+    "main.js": "/swapi/static/js/main.e97fdc27.js",
+    "static/js/787.b1b501c9.chunk.js": "/swapi/static/js/787.b1b501c9.chunk.js",
+    "static/media/DoubleRingSpinner.svg": "/swapi/static/media/DoubleRingSpinner.e520e9b7fb18dd7e02255e6ffe0dcea9.svg",
+    "index.html": "/swapi/index.html",
+    "main.7d4f9bb0.css.map": "/swapi/static/css/main.7d4f9bb0.css.map",
+    "main.e97fdc27.js.map": "/swapi/static/js/main.e97fdc27.js.map",
+    "787.b1b501c9.chunk.js.map": "/swapi/static/js/787.b1b501c9.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7d4f9bb0.css",
+    "static/js/main.e97fdc27.js"
+  ]
+}
