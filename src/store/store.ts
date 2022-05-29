@@ -1,7 +1,7 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
-import thunkMiddleware from 'redux-thunk'
+import thunkMiddleware, {ThunkDispatch} from 'redux-thunk'
 import {planetsReducer} from "./planetsReducer";
-import {TypedUseSelectorHook, useSelector} from "react-redux";
+import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {residentsReducer} from "./residentsReducer";
 
 const rootReducer = combineReducers({
@@ -12,6 +12,8 @@ const rootReducer = combineReducers({
 export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
+
+export const useAppDispatch = () => useDispatch<ThunkDispatch<AppRootStateType, unknown, any>>()
 
 export const useAppSelector: TypedUseSelectorHook<AppRootStateType> = useSelector
 

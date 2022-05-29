@@ -1,4 +1,4 @@
-import { ResidentType, swapiApi} from "../api/api";
+import {ResidentType, swapiApi} from "../api/api";
 import {Dispatch} from "redux";
 import {AppRootStateType} from "./store";
 import {setErrorAC} from "./planetsReducer";
@@ -15,7 +15,7 @@ const initialState: InitialStateType = {
 export const residentsReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
     case "RESIDENTS/SET-RESIDENTS":
-      return {...state,  residents: action.residents}
+      return {...state, residents: action.residents}
     case "RESIDENTS/SET-LOADING":
       return {...state, loading: action.loading}
     default:
@@ -40,12 +40,12 @@ export const fetchResidentsTC = (name: string) => {
     const urls = getState().planets.planets[index].residents
     dispatch(setLoadingAC(true))
     Promise.all(urls.map(url => swapiApi.getResidents(url)))
-      .then(res=>{
+      .then(res => {
         const residents = res.map(el => el.data)
         dispatch(setResidentsAC(residents))
         dispatch(setLoadingAC(false))
       })
-      .catch((err)=>{
+      .catch((err) => {
         console.log(err)
         dispatch(setErrorAC('something went wrong'))
       })

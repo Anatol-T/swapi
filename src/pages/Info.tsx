@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
-import {useDispatch} from "react-redux";
 import {fetchResidentsTC, setResidentsAC} from "../store/residentsReducer";
 import {PlanetType, ResidentType} from "../api/api";
 import {useAppSelector} from "../store/store";
@@ -10,7 +9,8 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Button from '@mui/material/Button';
-import spinner from "../assets/DoubleRingSpinner.svg"
+import {Spinner} from "../conponents/Spinner";
+import {useDispatch} from "react-redux";
 
 type FilterType = "all" | "male" | "female"
 
@@ -26,20 +26,27 @@ export const Info = () => {
   const planet = planets.filter(el => el.name === planetName)[0]
 
   const residents = useAppSelector<ResidentType[]>(state => state.residents.residents)
-  const filteredResidents = filter === "male"
-    ? residents.filter(el => el.gender === 'male')
-    : filter === "female"
-      ? residents.filter(el => el.gender === 'female')
-      : residents;
+
+  const filteredResidents = (filter: FilterType) => {
+    if (filter === "male") {
+      return residents.filter(el => el.gender === 'male')
+    }
+    if (filter === "female") {
+      return residents.filter(el => el.gender === 'female')
+    }
+    return residents
+  }
 
   useEffect(() => {
     if (planetName) dispatch(fetchResidentsTC(planetName))
     return () => dispatch(setResidentsAC([]))
   }, [])
 
-  const goBack = () => {
-    navigate(`/`)
-  }
+  const mappedResidentsCards = residents.length === 0
+    ? <h3>No residents</h3>
+    : filteredResidents(filter).map(el => <ResidentCard resident={el} key={el.name}/>)
+
+  const goBack = () => navigate(`/`)
 
   return (
     <Container fixed>
@@ -53,17 +60,17 @@ export const Info = () => {
           <PlanetOptionsList planet={planet}/>
         </Grid>
         <Grid item>
-        <h3>Filter</h3>
+          <h3>Filter</h3>
           <ButtonGroup size="small" variant="contained" color={"inherit"}>
-            <Button onClick={()=>setFilter('all')}
+            <Button onClick={() => setFilter('all')}
                     color={filter === 'all' ? "primary" : "inherit"}>
               all
             </Button>
-            <Button onClick={()=>setFilter('male')}
+            <Button onClick={() => setFilter('male')}
                     color={filter === 'male' ? "primary" : "inherit"}>
               male
             </Button>
-            <Button onClick={()=>setFilter('female')}
+            <Button onClick={() => setFilter('female')}
                     color={filter === 'female' ? "primary" : "inherit"}>
               female
             </Button>
@@ -79,11 +86,9 @@ export const Info = () => {
         </Grid>
       </Grid>
       {loading
-        ? <div className={'loading'}><img src={spinner} alt="loading..."/></div>
+        ? <Spinner/>
         : <Grid container spacing={3}>
-          {residents.length === 0
-            ? <h3>No residents</h3>
-            : filteredResidents.map(el => <ResidentCard resident={el} key={el.name}/>)}
+          {mappedResidentsCards}
         </Grid>
       }
     </Container>

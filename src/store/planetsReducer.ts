@@ -41,13 +41,12 @@ type ActionsType = SetAppErrorACType
 // thunks
 export const fetchPlanetsTC = () => {
   return (dispatch: Dispatch) => {
-    //dispatch(setInitAC(true))
     swapiApi.getPlanets()
       .then((res) => {
         dispatch(setPlanetsAC(res.data.results))
         dispatch(setInitAC(true))
       })
-      .catch((err)=>{
+      .catch((err) => {
         console.log(err)
         dispatch(setErrorAC('something went wrong'))
         dispatch(setInitAC(true))

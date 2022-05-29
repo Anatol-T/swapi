@@ -12,22 +12,19 @@ export const Main = () => {
   const planets = useAppSelector<PlanetType[]>(state => state.planets.planets)
   const init = useAppSelector<boolean>(state => state.planets.init)
 
+  const mappedCards = planets.map(planet => <PlanetCard planet={planet} key={planet.name}/>)
+
   if (error) return <Navigate to={'error'}/>
   return (
-      <Container fixed>
-        <Grid container justifyContent="center">
-          <Grid item>
-            <h2>Planets list</h2>
-          </Grid>
+    <Container fixed>
+      <Grid container justifyContent="center">
+        <Grid item>
+          <h2>Planets list</h2>
         </Grid>
-        <Grid container spacing={3}>
-          {!init && <div>loading...</div>}
-          {init && planets.map(planet => {
-            return (
-              <PlanetCard planet={planet} key={planet.name}/>
-            )
-          })}
-        </Grid>
-      </Container>
+      </Grid>
+      <Grid container spacing={3}>
+        {init && mappedCards}
+      </Grid>
+    </Container>
   );
 };
