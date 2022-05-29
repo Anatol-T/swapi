@@ -1,6 +1,7 @@
 import { ResidentType, swapiApi} from "../api/api";
 import {Dispatch} from "redux";
 import {AppRootStateType} from "./store";
+import {setErrorAC} from "./planetsReducer";
 
 type InitialStateType = {
   residents: ResidentType[]
@@ -44,6 +45,9 @@ export const fetchResidentsTC = (name: string) => {
         dispatch(setResidentsAC(residents))
         dispatch(setLoadingAC(false))
       })
-
+      .catch((err)=>{
+        console.log(err)
+        dispatch(setErrorAC('something went wrong'))
+      })
   }
 }

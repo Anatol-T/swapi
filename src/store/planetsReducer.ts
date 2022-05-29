@@ -10,7 +10,7 @@ type InitialStateType = {
 const initialState: InitialStateType = {
   planets: [],
   init: false,
-  error: '',
+  error: null,
 }
 
 export const planetsReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
@@ -47,6 +47,10 @@ export const fetchPlanetsTC = () => {
         dispatch(setPlanetsAC(res.data.results))
         dispatch(setInitAC(true))
       })
+      .catch((err)=>{
+        console.log(err)
+        dispatch(setErrorAC('something went wrong'))
+        dispatch(setInitAC(true))
+      })
   }
 }
-//const [ planets, films, people ] = await Promise.all(urls.map(url => getAllPages(url)));

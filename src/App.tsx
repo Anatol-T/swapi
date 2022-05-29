@@ -7,6 +7,7 @@ import {fetchPlanetsTC} from "./store/planetsReducer";
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "./store/store";
 import spinner from "../src/assets/DoubleRingSpinner.svg"
+import {ErrorPage} from "./pages/ErrorPage";
 
 function App() {
   const dispatch = useDispatch<any>()
@@ -22,6 +23,7 @@ function App() {
       <Routes>
         <Route path={'/'} element={<Main/>}/>
         <Route path={'/info/:planetName'} element={<Info/>}/>
+        <Route path={'error'} element={<ErrorPage/>}/>
         <Route path='404' element={<h1 style={{textAlign: 'center'}}>404: PAGE NOT FOUND</h1>}/>
         <Route path={'/*'} element={<Navigate to="404"/>}/>
       </Routes>
